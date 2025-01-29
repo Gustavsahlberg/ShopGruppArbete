@@ -1,2 +1,8 @@
 /env
 /__pycache__
+migrations/versions/__pycache__/aad056c21b18_initial.cpython-312.pyc
+areas/products/__pycache__/__init__.cpython-312.pyc
+areas/products/__pycache__/productPages.cpython-312.pyc
+areas/products/__pycache__/services.cpython-312.pyc
+areas/site/__pycache__/sitePages.cpython-312.pyc
+migrations/__pycache__/env.cpython-312.pyc
