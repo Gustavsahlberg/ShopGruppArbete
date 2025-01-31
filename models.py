@@ -35,8 +35,12 @@ class Product(db.Model):
     ReorderLevel = db.Column(db.Integer, unique=False, nullable=False)
     Discontinued = db.Column(db.Boolean, unique=False, nullable=False)
 
-
-
+class Contact(db.Model):
+    _tablename__= "Contact"
+    ContactID = db.Column(db.Integer, primary_key=True)
+    ContactName = db.Column(db.String(40), unique=False, nullable=False)
+    ContactMail = db.Column(db.String(40), unique=False, nullable=False)
+    ContactMsg= db.Column(db.String(255), unique=False, nullable=False)
 
 def seedData(app):
     app.security = Security(app, user_datastore)
