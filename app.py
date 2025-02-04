@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from models import db, seedData
 from flask_migrate import Migrate, upgrade
 from areas.site.sitePages import siteBluePrint
