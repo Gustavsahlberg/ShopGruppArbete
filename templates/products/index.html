@@ -23,23 +23,31 @@
 
 
             <!-- row -->
-            <div class="row">
+<div class="row">
 
-                <!-- section title -->
-                <div class="col-md-12">
-                    <div class="section-title">
-                        <h3 class="title">Hot products</h3>
-                        <div class="section-nav">
-                            <ul class="section-tab-nav tab-nav">
-                                <li class="active"><a data-toggle="tab" href="#tab1">Latest</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Price</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Name</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Asc</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- /section title -->
+    <!-- section title -->
+    <div class="col-md-12">
+        <div class="section-title">
+            <h3 class="title">Hot products</h3>
+            <div class="section-nav">
+                <ul class="section-tab-nav tab-nav">
+                    <li class="{{ 'active' if sort_by == 'latest' else '' }}">
+                        <a href="{{ url_for('product.index', sort='latest') }}">Latest</a>
+                    </li>
+                    <li class="{{ 'active' if sort_by == 'price' else '' }}">
+                        <a href="{{ url_for('product.index', sort='price') }}">Price</a>
+                    </li>
+                    <li class="{{ 'active' if sort_by == 'name' else '' }}">
+                        <a href="{{ url_for('product.index', sort='name') }}">Name</a>
+                    </li>
+                    <li class="{{ 'active' if sort_by == 'asc' else '' }}">
+                        <a href="{{ url_for('product.index', sort='asc') }}">Asc</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /section title -->
                 <!-- Products tab & slick -->
 
                 <div class="col-md-12">
