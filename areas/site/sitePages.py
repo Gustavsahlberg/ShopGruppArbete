@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 from dotenv import load_dotenv
 from forms import ContactForm
 from models import Contact, db
+from flask_security import login_required
 
 
 
@@ -32,5 +33,6 @@ def terms() -> str:
      return render_template('site/terms.html')
 
 @siteBluePrint.route('/about')
+@login_required
 def about() -> str:
      return render_template('site/about.html')

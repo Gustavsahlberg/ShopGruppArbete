@@ -1,7 +1,7 @@
 
 class ConfigDebug():
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:password@localhost/shop20220128'    # File-based SQL database
-    SECRET_KEY = 'SDFA11#'
+
 
  # Flask-Mail SMTP server settings
     MAIL_SERVER = '127.0.0.1'
@@ -19,7 +19,6 @@ class ConfigDebug():
     USER_EMAIL_SENDER_NAME = USER_APP_NAME
     USER_EMAIL_SENDER_EMAIL = "noreply@example.com"    
 
-    SECURITY_PASSWORD_SALT = "341231232"
 
 
     
