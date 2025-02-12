@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,request
 from .services import getCategory, getTrendingCategories, getProduct, getTrendingProducts
 
 
@@ -12,9 +12,12 @@ productBluePrint = Blueprint('product', __name__)
 def index() -> str:
     trendingCategories = []
     trendingCategories = getTrendingCategories()
-    trendingProducts = getTrendingProducts()
+
+    sort_by = request.args.get('sort', "latest")
+    trendingProducts = getTrendingProducts(sort_by)
     return render_template('products/index.html',trendingCategories=trendingCategories,
-        products=trendingProducts
+        products=trendingProducts,
+        sort_by=sort_by
     )
 
 
