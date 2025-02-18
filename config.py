@@ -4,13 +4,13 @@ class ConfigDebug():
     SECRET_KEY = 'SDFA11#'
 
  # Flask-Mail SMTP server settings
-    MAIL_SERVER = '127.0.0.1'
+    MAIL_SERVER = 'localhost'
     MAIL_PORT = 1025
-    MAIL_USE_SSL = False
     MAIL_USE_TLS = False
-    MAIL_USERNAME = 'email@example.com'     
-    MAIL_PASSWORD = 'password'
-    MAIL_DEFAULT_SENDER = '"MyApp" <noreply@example.com>'
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = None
+    MAIL_PASSWORD = None
+    MAIL_DEFAULT_SENDER = 'noreply@StefansSupershop.com'
 
     # Flask-User settingsa
     USER_APP_NAME = "Flask-User Basic App"      # Shown in and email templates and page footers
