@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, auth_required, hash_password
 from flask_security.models import fsqla_v3 as fsqla
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -41,6 +42,16 @@ class Contact(db.Model):
     ContactName = db.Column(db.String(40), unique=False, nullable=False)
     ContactMail = db.Column(db.String(40), unique=False, nullable=False)
     ContactMsg= db.Column(db.String(255), unique=False, nullable=False)
+
+
+class Newsletter(db.Model):
+    _tablename__= "Newsletter"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(40), unique=False, nullable=False)
+    signup_date = db.Column(db.Date, default=datetime.utcnow) 
+
+
+
 
 def seedData(app):
     app.security = Security(app, user_datastore)
