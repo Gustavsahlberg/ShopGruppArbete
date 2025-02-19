@@ -3,7 +3,7 @@ from forms import NewsLetterForm
 from models import Newsletter, db
 from flask_mail import Message
 from .services import getCategory, getTrendingCategories, getProduct, getTrendingProducts
-
+from extensions import mail
 
 
 productBluePrint = Blueprint('product', __name__)
@@ -27,9 +27,9 @@ def index() -> str:
             body="Du har nu premenurerat på newsletter till Stefans Supershop"
             )
             mail.send(msg)
-            return render_template("site/contactthanks.html",form=form)
+            return render_template("site/mailthanks.html",form=form)
         else:
-            return 
+            return render_template("site/fail.html",form=form)
 
         
     trendingCategories = []
