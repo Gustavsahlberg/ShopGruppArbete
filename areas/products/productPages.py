@@ -4,6 +4,7 @@ from models import Newsletter, db
 from flask_mail import Message
 from .services import getCategory, getTrendingCategories, getProduct, getTrendingProducts
 from extensions import mail
+from flask_security import login_required
 
 
 productBluePrint = Blueprint('product', __name__)
@@ -12,6 +13,7 @@ productBluePrint = Blueprint('product', __name__)
 
 
 @productBluePrint.route('/',  methods=["GET", "POST"])
+@login_required
 def index() -> str:
     form = NewsLetterForm()
     if request.method == "POST":

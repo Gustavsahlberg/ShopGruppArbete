@@ -2,18 +2,42 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, auth_required, hash_password
 from flask_security.models import fsqla_v3 as fsqla
 from datetime import datetime
-
+from sqlalchemy.orm import relationship
 db = SQLAlchemy()
 
 
 fsqla.FsModels.set_db_info(db)
 
+
+roles_users = db.Table('roles_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('User.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('Role.id')),
+    extend_existing=True)
+
+
+
+
+
 class Role(db.Model, fsqla.FsRoleMixin):
-    pass
+    __tablename__ = "Role"
+
+    id =  db.Column(db.Integer, primary_key=True)
+    name =  db.Column(db.String(80), nullable=False, unique=True)
+    description =  db.Column(db.String(255), nullable=False)
 
 class User(db.Model, fsqla.FsUserMixin):
-    pass
+    __tablename__ = "User"
 
+    id = db.Column(db.Integer, primary_key=True)
+    password = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    active = db.Column(db.Boolean, default=True)
+    fs_uniquifier = db.Column(db.String(255), nullable=False, unique=True)
+    roles = db.relationship("Role", secondary=roles_users, back_populates="users")
+    username = db.Column(db.String(50), nullable=False, unique=True)
+
+
+Role.users = relationship("User", secondary=roles_users, back_populates="roles")
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 
 class Category(db.Model):
@@ -54,19 +78,18 @@ class Newsletter(db.Model):
 
 
 def seedData(app):
-    app.security = Security(app, user_datastore)
-    app.security.datastore.db.create_all()
-    if not app.security.datastore.find_role("Admin"):
-        app.security.datastore.create_role(name="Admin")
-    if not app.security.datastore.find_role("Staff"):
-        app.security.datastore.create_role(name="Staff")
-    if not app.security.datastore.find_user(email="admin@systementor.se"):
-        app.security.datastore.create_user(email="admin@systementor.se", password=hash_password("password"),roles=["Admin"])
-    if not app.security.datastore.find_user(email="worker1@systementor.se"):
-        app.security.datastore.create_user(email="worker1@systementor.se", password=hash_password("password"),roles=["Staff"])
-    if not app.security.datastore.find_user(email="worker2@systementor.se"):
-        app.security.datastore.create_user(email="worker2@systementor.se", password=hash_password("password"),roles=["Staff"])
-    app.security.datastore.db.session.commit()
+    if not Role.query.first():
+        user_datastore.create_role(name="Admin", description="Admin")
+        user_datastore.create_role(name="Cashiers", description="Cashiers")
+        db.session.commit()
+
+
+
+    if not User.query.first():
+        user_datastore.create_user(username="Gustav",email='gustav@gmail.com', password='password', roles=['Admin','Cashiers'])
+        user_datastore.create_user(username="SebastianAdmin",email='sebastian.ohman@systementor.se', password='Hejsan123#', roles=['Admin'])
+        user_datastore.create_user(username="SebastianCashier",email='sebastian.ohman@teknikhogskolan.se', password='Hejsan123#', roles=['Cashiers'])
+        db.session.commit()
 
 
 
