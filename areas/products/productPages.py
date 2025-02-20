@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template,request
+from forms import NewsLetterForm
+from models import Newsletter, db
+from flask_mail import Message
 from .services import getCategory, getTrendingCategories, getProduct, getTrendingProducts
-
+from extensions import mail
 
 
 productBluePrint = Blueprint('product', __name__)
@@ -8,8 +11,27 @@ productBluePrint = Blueprint('product', __name__)
 
 
 
-@productBluePrint.route('/')
+@productBluePrint.route('/',  methods=["GET", "POST"])
 def index() -> str:
+    form = NewsLetterForm()
+    if request.method == "POST":
+        new_reg = Newsletter()
+        new_reg.email = form.email.data
+        finns = Newsletter.query.filter_by(email=new_reg.email).first()
+        if finns is None:
+            db.session.add(new_reg)
+            db.session.commit()
+            msg = Message(
+            'Bekräftelse Newsletter',
+            recipients=[new_reg.email],
+            body="Du har nu premenurerat på newsletter till Stefans Supershop"
+            )
+            mail.send(msg)
+            return render_template("site/mailthanks.html",form=form)
+        else:
+            return render_template("site/fail.html",form=form)
+
+        
     trendingCategories = []
     trendingCategories = getTrendingCategories()
 
@@ -17,7 +39,8 @@ def index() -> str:
     trendingProducts = getTrendingProducts(sort_by)
     return render_template('products/index.html',trendingCategories=trendingCategories,
         products=trendingProducts,
-        sort_by=sort_by
+        sort_by=sort_by,
+        form=form
     )
 
 
