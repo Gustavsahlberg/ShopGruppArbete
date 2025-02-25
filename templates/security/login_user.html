@@ -1,0 +1,24 @@
+{% extends "login_base.html" %}
+
+{% block logincontent %}
+<div class="card">
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for_security('login') }}">
+        {{ login_user_form.hidden_tag() }}
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            {{ login_user_form.email(class="form-control", placeholder="Enter e-mail") }}
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            {{ login_user_form.password(class="form-control", placeholder="Enter password") }}
+        </div>
+        <div class="form-group form-check">
+            {{ login_user_form.remember(class="form-check-input") }}
+            <label class="form-check-label" for="remember">Remember me</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+
+{% endblock %}
