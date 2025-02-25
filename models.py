@@ -78,17 +78,20 @@ class Newsletter(db.Model):
 
 
 def seedData(app):
+    db.create_all()
+
+
     if not Role.query.first():
         user_datastore.create_role(name="Admin", description="Admin")
-        user_datastore.create_role(name="Cashiers", description="Cashiers")
+        user_datastore.create_role(name="Kund", description="Kund")
         db.session.commit()
 
 
 
     if not User.query.first():
-        user_datastore.create_user(username="Gustav",email='gustav@gmail.com', password='password', roles=['Admin','Cashiers'])
+        user_datastore.create_user(username="Gustav",email='gustav@gmail.com', password='password', roles=['Admin','Kund'])
         user_datastore.create_user(username="SebastianAdmin",email='sebastian.ohman@systementor.se', password='Hejsan123#', roles=['Admin'])
-        user_datastore.create_user(username="SebastianCashier",email='sebastian.ohman@teknikhogskolan.se', password='Hejsan123#', roles=['Cashiers'])
+        user_datastore.create_user(username="SebastianCashier",email='sebastian.ohman@teknikhogskolan.se', password='Hejsan123#', roles=['Kund'])
         db.session.commit()
 
 
