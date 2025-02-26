@@ -4,6 +4,7 @@ from models import Newsletter, db
 from flask_mail import Message
 from .services import getCategory, getTrendingCategories, getProduct, getTrendingProducts
 from extensions import mail
+from flask_security import login_required
 
 
 productBluePrint = Blueprint('product', __name__)
