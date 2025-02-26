@@ -13,7 +13,6 @@ productBluePrint = Blueprint('product', __name__)
 
 
 @productBluePrint.route('/',  methods=["GET", "POST"])
-@login_required
 def index() -> str:
     form = NewsLetterForm()
     if request.method == "POST":
